@@ -17,9 +17,9 @@ jobs:
 
     - name: Build and push Docker image
       env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN}}
+        DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD}}
       run: |
-        docker buildx build --platform linux/amd64 -t your-dockerhub-username/python-app:latest .
-        echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-        docker push your-dockerhub-username/python-app:latest
+        echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME}}/python-app .
+        docker push ${{secrets.DOCKERHUB_USERNAME}}/python-app
